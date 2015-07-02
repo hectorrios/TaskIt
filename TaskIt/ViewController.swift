@@ -35,6 +35,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "showTaskDetail") {
+            let detailVC: TaskDetailViewController = segue.destinationViewController as! TaskDetailViewController
+            
+            let indexPath = self.tableView.indexPathForSelectedRow()
+            
+            let thisTask: TaskModel = self.taskArray[indexPath!.row]
+            
+            detailVC.detailTaskModel = thisTask
+            
+        }
+    }
+    
     // MARK: UITableViewDataSource protocol methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -58,7 +71,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: UITableViewDelegate methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("")
+        println(indexPath.row)
+        
+        performSegueWithIdentifier("showTaskDetail", sender: self)
     }
 
 
